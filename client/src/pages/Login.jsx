@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import axiosInstance from "../services/axiosInstance";
+import { pagePath } from "../routes/pagePath";
+import {Link} from "react-router"
 
 const Login = () => {
   const {
@@ -102,9 +104,9 @@ const Login = () => {
         {/* Footer */}
         <div className="mt-6 text-center text-sm text-gray-600">
           Don’t have an account?{" "}
-          <span className="text-black font-medium cursor-pointer hover:underline">
+          <Link to={pagePath.register} className="text-black font-medium cursor-pointer hover:underline">
             Register
-          </span>
+          </Link>
         </div>
       </div>
     </div>

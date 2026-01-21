@@ -5,7 +5,10 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const MainRouter = require("./routes/main.router");
 const { default: connectDB } = require("./config/db.config");
-const { isloggedIn, refresh } = require("./middlewares/auth.middleware");
+const {
+  isloggedIn,
+  refreshAccessToken,
+} = require("./middlewares/auth.middleware");
 
 const app = express();
 const corsOptions = {
@@ -17,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
 app.use(cors(corsOptions));
+app.use("/protected", refreshAccessToken);
 
 //routes handelers
 app.get("/", (req, res) => {

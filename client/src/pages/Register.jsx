@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axiosInstance from "../services/axiosInstance";
+import { Link } from "react-router";
+import { pagePath } from "../routes/pagePath";
 
 const Register = () => {
   const {
@@ -123,7 +125,9 @@ const Register = () => {
         {/* Footer */}
         <p className="text-xs text-center text-black/60 mt-6">
           Already have an account?{" "}
-          <span className="underline cursor-pointer">Login</span>
+          <Link to={pagePath.login} className="underline cursor-pointer">
+            Login
+          </Link>
         </p>
       </div>
     </div>

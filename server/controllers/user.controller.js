@@ -20,7 +20,7 @@ const register = async (req, res) => {
     }
 
     // 2️ Check if user already exists
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email }); //nameet@gmail.com null
     if (existingUser) {
       return res.status(409).json({
         success: false,
@@ -92,12 +92,15 @@ const login = async (req, res) => {
     }
 
     // 4️⃣ Generate tokens
+
+    //access token
     const accessToken = jwt.sign(
-      { userId: user._id },
+      { userId: user._id, name: user.name },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: process.env.ACCESS_TOKEN_EXPIRE },
     );
 
+    //refreshtoken
     const refreshToken = jwt.sign(
       { userId: user._id },
       process.env.REFRESH_TOKEN_SECRET,
@@ -108,13 +111,14 @@ const login = async (req, res) => {
     user.refreshToken = refreshToken;
     await user.save();
 
-    // 6️⃣ Set refresh token in cookie
-    res.cookie("refreshToken", refreshToken, {
+    let refreshCookieOption = {
       httpOnly: true,
       secure: true, // true in production (https)
       sameSite: "strict", // required for cross-origin cookies
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    });
+    }
+    // 6️⃣ Set refresh token in cookie
+    res.cookie("refreshToken", refreshToken,refreshCookieOption );
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
