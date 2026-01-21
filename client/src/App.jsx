@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path={pagePath.home} element={<Home />} />
         <Route path={pagePath.login} element={<Login />} />
-        <Route path={pagePath.login} element={<Register />} />
+        <Route path={pagePath.register} element={<Register />} />
       </Routes>
     </>
   );
